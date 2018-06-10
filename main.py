@@ -1,13 +1,15 @@
 import yaml
 import tweepy
 
-def get_api_key(yaml_file):
-    with open(yaml_file) as file:
-        yml_data = yaml.load(file)
 
-    return yml_data
+def get_twitter_api_keys(yaml_file):
+    with open(yaml_file) as y:
+        yml_data = yaml.load(y)
 
-data = get_api_key("tw_config.yml")
+    return yml_data['Twitter']
+
+
+data = get_twitter_api_keys("tw_config.yml")
 COMSUMER_KEY = data['comsumer_key']
 COMSUMER_SECRET = data['comsumer_secret']
 ACCESS_TOKEN_KEY = data['access_token']
@@ -29,12 +31,13 @@ class MyTweetStream(tweepy.StreamListener):
         return True
 
     def on_err(self, status_code):
-        print('Got an error with statsu code: '+ str(status.code))
+        print('Got an error with statsu code: ' + str(status_code))
         return True
 
     def on_timeout(self):
         print('Timeout...')
         return True
+
 
 myTweetStream = MyTweetStream()
 mystream = tweepy.Stream(auth, myTweetStream)
