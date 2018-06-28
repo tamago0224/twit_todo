@@ -9,7 +9,7 @@ def get_wunderlist_api_keys(yaml_file):
     return yml_data['Wunderlist']
 
 
-def setup(CLIENT_ID, ACCESS_TOKEN):
+def setup(ACCESS_TOKEN, CLIENT_ID):
     wunderlist = wunderpy2.WunderApi()
     client = wunderlist.get_client(ACCESS_TOKEN, CLIENT_ID)
 
@@ -24,5 +24,5 @@ if __name__ == '__main__':
     data = get_wunderlist_api_keys("tw_config.yml")
     CLIENT_ID = data['client_id']
     ACCESS_TOKEN = data['access_token']
-    wunderlist = setup(CLIENT_ID, ACCESS_TOKEN)
+    wunderlist = setup(ACCESS_TOKEN, CLIENT_ID)
     add_task(wunderlist, "sample")
