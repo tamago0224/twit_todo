@@ -3,9 +3,7 @@
 ## 前提環境
 - pyyaml
 - tweepy
-- wunderpy
 
 ## ライブラリのインストール
 1. `$ pip install pyyaml`
 1. `$ pip install tweepy`
-
