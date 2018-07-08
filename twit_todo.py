@@ -1,4 +1,5 @@
 import yaml
+import re
 from twython import TwythonStreamer
 from wunderlistAPI import WunderlistAPI
 
@@ -15,10 +16,12 @@ class TwitStreamer(TwythonStreamer):
         super().__init__(comsumer_key, comsumer_secret, access_token_key, access_token_secret)
         self.users = users
         self.wunderlist = WunderlistAPI()
+        self.wunderlist.init_wunderlist()
 
     def on_success(self, data):
-        print(data)
-        print(data['screen_name'])
+        if data['user']['screen_name'] in self.users:
+            title = re.split(r'\s|\n', data['text'])[0]
+            self.wunderlist.add_task(title)
 
     def on_error(self, status_code, data):
         print("Error: %d" % status_code)

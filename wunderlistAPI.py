@@ -11,20 +11,15 @@ class WunderlistAPI:
 
     def init_wunderlist(self):
         wunder_data = self.get_wunderlist_api_keys("tw_config.yml")
-        self.client_id = wunder_data['client_id']
-        self.access_token = wunder_data['access_token']
+        client_id = wunder_data['client_id']
+        access_token = wunder_data['access_token']
         url = 'https://a.wunderlist.com/api/v1/user'
         params = {}
 
-        wunder = OAuth2Session()
-        wunder.headers['X-Client-ID'] = self.client_id
-        wunder.headers['X-Access-Token'] = self.access_token
-        req = wunder.get(url, params=params)
-
-        if req.status_code == 200:
-            return wunder
-        else:
-            return None
+        self.wunder = OAuth2Session()
+        self.wunder.headers['X-Client-ID'] = client_id
+        self.wunder.headers['X-Access-Token'] = access_token
+        self.wunder.get(url, params=params)
 
     def show_list(self):
         url = 'https://a.wunderlist.com/api/v1/lists'
