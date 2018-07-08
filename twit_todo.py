@@ -17,8 +17,11 @@ class TwitStreamer(TwythonStreamer):
         self.wunderlist = WunderlistAPI()
 
     def on_success(self, data):
-        if data['screen_name'] in self.users:
-            self.wunderlist.add_task(data['text'])
+        print(data)
+        print(data['screen_name'])
+
+    def on_error(self, status_code, data):
+        print("Error: %d" % status_code)
 
 
 def main():
@@ -29,9 +32,10 @@ def main():
     ACCESS_TOKEN_KEY = data['access_token']
     ACCESS_TOKEN_SECRET = data['access_token_secret']
     TARGET_HASHTAG = data['target_hashtag']
+    print(TARGET_HASHTAG)
     TARGET_USERS = data['target_users']
 
-    twitStreamer = (COMSUMER_KEY, COMSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET, TARGET_USERS)
+    twitStreamer = TwitStreamer(COMSUMER_KEY, COMSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET, TARGET_USERS)
     twitStreamer.statuses.filter(track=TARGET_HASHTAG)
 
 
