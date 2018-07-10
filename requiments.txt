@@ -1,0 +1,5 @@
+PyYAML==4.1
+requests==2.19.1
+requests-oauth==0.4.1
+requests-oauthlib==1.0.0
+twython==3.7.0
