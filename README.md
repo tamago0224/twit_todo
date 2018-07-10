@@ -3,11 +3,11 @@ A script to be added to the TODO list of Wunderlist when tweet with a specified 
 
 ## Install
 ### Install modules
-`$ pip install pyyaml`
-
-`$ pip install twython`
-
-`$ pip install requests requests_oauthlib`
+```
+$ pip install pyyaml
+$ pip install twython
+$ pip install requests requests_oauthlib
+```
 
 ### Download this repository
 `$ git clone https://github.com/tamago0224/twit_todo`
