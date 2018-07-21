@@ -17,11 +17,13 @@ class TwitStreamer(TwythonStreamer):
         self.users = users
         self.wunderlist = WunderlistAPI()
         self.wunderlist.init_wunderlist()
+        lists = self.wunderlist.get_list()
+        self.inbox_num = self.wunderlist.chose_list(lists)
 
     def on_success(self, data):
         if data['user']['screen_name'] in self.users:
             title = re.split(r'\s|\n', data['text'])[0]
-            self.wunderlist.add_task(title)
+            self.wunderlist.add_task(title, self.inbox_num)
 
     def on_error(self, status_code, data):
         print("Error: %d" % status_code)

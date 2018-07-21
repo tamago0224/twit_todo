@@ -21,22 +21,38 @@ class WunderlistAPI:
         self.wunder.headers['X-Access-Token'] = access_token
         self.wunder.get(url, params=params)
 
-    def show_list(self):
+    def chose_list(self, lists):
+        if lists is None:
+            print("Error: no list,")
+            sys.exit(1)
+
+        print("Chose list id for posting your tweet.")
+        index = 1
+        for l in lists:
+            print("{}) {}.".format(index, l['title']))
+            index += 1
+
+        chose_index = int(input(">>"))
+        list_id = lists[chose_index-1]['id']
+        return list_id
+
+    def get_list(self):
         url = 'https://a.wunderlist.com/api/v1/lists'
         params = {}
         req = self.wunder.get(url, params=params)
+        lists = None
 
         if req.status_code == 200:
             lists = json.loads(req.text)
-            for l in lists:
-                print("ID: {}, TITLE: {}".format(l['id'], l['title']))
         else:
             print("Error: status code: %d, do not get todo list." % req.status_code)
 
-    def add_task(self, title):
+        return lists
+
+    def add_task(self, title, list_id):
         url = 'https://a.wunderlist.com/api/v1/tasks'
         params = {
-                "list_id": 355782822,
+                "list_id": list_id,
                 "title": title,
                 }
 
